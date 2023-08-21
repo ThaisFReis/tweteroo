@@ -7,7 +7,10 @@ import { TweetDto } from './tweet.dto';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  // ... outros métodos ...
+  @Get()
+  getHealth(){
+    return "I'm okay!";
+  }
 
   @Post('sign-up')
   signUp(@Body() signUpDto: SignUpDto) {
@@ -15,10 +18,14 @@ export class AppController {
       throw new HttpException('All fields are required!', HttpStatus.BAD_REQUEST);
     }
 
+    if (!signUpDto.avatar.match(/^https?:\/\/\S+$/)) {
+      throw new HttpException('Avatar must be a URL address', HttpStatus.BAD_REQUEST);
+    }
+
     // Salva o usuário usando o serviço
     this.appService.addUser(signUpDto.username, signUpDto.avatar);
 
-    return { message: 'User registered successfully' };
+    throw new HttpException('User registered successfully', HttpStatus.OK);
   }
 
   @Post('tweets') // Rota POST /tweets
