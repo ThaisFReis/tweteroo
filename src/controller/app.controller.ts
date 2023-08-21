@@ -8,59 +8,66 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get()
-  getHealth(){
+  getHealth() {
     return "I'm okay!";
   }
 
   @Post('sign-up')
-  signUp(@Body() signUpDto: SignUpDto) {
+  async signUp(@Body() signUpDto: SignUpDto) {
+
     if (!signUpDto.username || !signUpDto.avatar) {
-      throw new HttpException('All fields are required!', HttpStatus.BAD_REQUEST);
+      throw new HttpException("All fields are required!", HttpStatus.BAD_REQUEST);
     }
 
-    if (!signUpDto.avatar.match(/^https?:\/\/\S+$/)) {
-      throw new HttpException('Avatar must be a URL address', HttpStatus.BAD_REQUEST);
+    if (this.appService.isUsernameTaken(signUpDto.username)) {
+      throw new HttpException('User already registered', HttpStatus.UNAUTHORIZED);
     }
 
-    // Salva o usuário usando o serviço
     this.appService.addUser(signUpDto.username, signUpDto.avatar);
 
     throw new HttpException('User registered successfully', HttpStatus.OK);
   }
 
-  @Post('tweets') // Rota POST /tweets
+  @Post('tweets')
   createTweet(@Body() tweetDto: TweetDto) {
     if (!tweetDto.username || !tweetDto.tweet) {
       throw new HttpException('All fields are required!', HttpStatus.BAD_REQUEST);
     }
 
-    // Verifica se o usuário está registrado
     if (!this.appService.isUsernameTaken(tweetDto.username)) {
       throw new HttpException('User not registered', HttpStatus.UNAUTHORIZED);
     }
 
-    // Salva o tweet usando o serviço
     this.appService.addTweet(tweetDto.username, tweetDto.tweet);
 
     return { message: 'Tweet created successfully' };
   }
 
-  @Get('tweets') // Rota GET /tweets
-  getTweets(@Query('page') page: number) {
+  @Get('tweets')
+  getTweets(@Query('page') page: string) {
     const tweetsPerPage = 15;
 
-    // Validação da página
-    if (page !== undefined && (isNaN(page) || page < 1)) {
+    if (page && (isNaN(Number(page)) || Number(page) < 1)) {
       throw new HttpException('Informe uma página válida!', HttpStatus.BAD_REQUEST);
     }
 
-    const tweets = this.appService.getTweets(page, tweetsPerPage);
-    return tweets;
+    const paginatedTweets = this.appService.getTweets(Number(page), tweetsPerPage);
+
+    return paginatedTweets.map(tweet => ({
+      username: tweet.getUser().getUsername(),
+      avatar: tweet.getUser().getAvatar(),
+      tweet: tweet.getTweet(),
+    }));
   }
 
-  @Get('tweets/:username') // Rota GET /tweets/:username
+  @Get('tweets/:username')
   getUserTweets(@Param('username') username: string) {
-    const tweets = this.appService.getUserTweets(username);
-    return tweets;
+    const userTweets = this.appService.getUserTweets(username);
+
+    return userTweets.map(tweet => ({
+      username: tweet.getUser().getUsername(),
+      avatar: tweet.getUser().getAvatar(),
+      tweet: tweet.getTweet(),
+    }));
   }
 }
