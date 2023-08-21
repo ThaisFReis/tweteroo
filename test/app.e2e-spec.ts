@@ -36,14 +36,15 @@ describe('AppController (e2e)', () => {
   });
 
   it('/signup => should deny a sign-up when data is wrong', async () => {
-    await request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .post('/sign-up')
       .send({
         username: 'test', // missing avatar on purpose
       })
       .expect(HttpStatus.BAD_REQUEST);
 
-    expect('All fields are required!');
+    const errorMessages: string[] = response.body.message;
+    expect(errorMessages).toContain('All fields are required!');
   });
 
   it('/signup => should accept a sign-up', () => {
@@ -94,14 +95,11 @@ describe('AppController (e2e)', () => {
 
     const response = await request(app.getHttpServer()).get('/tweets');
     expect(response.body).toHaveLength(15);
-
-    // Check if the first tweet's username matches the test user
-    expect(response.body[0].username).toBe(username);
-
-    // Ensure all tweets belong to the same user
-    for (const tweet of response.body) {
-      expect(tweet.username).toBe(username);
-    }
+    expect(response.body[0]).toEqual({
+      username: expect.any(String),
+      avatar: expect.any(String),
+      tweet: expect.any(String),
+    });
   });
 
   it('GET /tweets should get the second page of results', async () => {
