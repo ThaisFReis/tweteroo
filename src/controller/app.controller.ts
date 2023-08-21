@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Query, Param } from '@nestjs/common';
 import { AppService } from '../app.service';
 import { SignUpDto } from './sign-up.dto';
 import { TweetDto } from './tweet.dto';
@@ -48,6 +48,12 @@ export class AppController {
     }
 
     const tweets = this.appService.getTweets(page, tweetsPerPage);
+    return tweets;
+  }
+
+  @Get('tweets/:username') // Rota GET /tweets/:username
+  getUserTweets(@Param('username') username: string) {
+    const tweets = this.appService.getUserTweets(username);
     return tweets;
   }
 }

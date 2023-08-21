@@ -43,4 +43,9 @@ export class AppService {
 
     return paginatedTweets;
   }
+
+  getUserTweets(username: string): Tweet[] {
+    const userTweets = this.tweets.filter(tweet => tweet.getUser().getUsername() === username);
+    return userTweets;
+  }
 }
