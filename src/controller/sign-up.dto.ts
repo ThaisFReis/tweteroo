@@ -1,9 +1,9 @@
-import { IsString, IsUrl } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class SignUpDto {
     @IsString()
     username: string;
 
-    @IsUrl()
+    @IsString()
     avatar: string;
 }

@@ -12,8 +12,12 @@ export class AppService {
       throw new HttpException('Username already taken', HttpStatus.CONFLICT);
     }
 
-    if (!this.isURLValid(avatar)) {
+    if (!avatar) {
       throw new HttpException("All fields are required!", HttpStatus.BAD_REQUEST);
+    }
+
+    if (!this.isURLValid(avatar)) {
+      throw new HttpException('All fields are required!', HttpStatus.BAD_REQUEST);
     }
 
     const newUser = new User(username, avatar);
