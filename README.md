@@ -1,73 +1,59 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Tweteroo - Clone do Twitter
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este é um projeto de backend que consiste em construir a API do Tweteroo, um clone do Twitter. Ele oferece recursos para criar e visualizar tweets, fazer login e realizar operações relacionadas a usuários.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias Utilizadas
 
-## Description
+- [NestJS](https://nestjs.com/) - Um framework para construção de aplicativos Node.js.
+- [Git](https://git-scm.com/) - Versionamento de código.
+- [GitHub](https://github.com/) - Repositório público do GitHub para o código do backend.
+- [Jest](https://jestjs.io/) - Framework de teste.
+- [Postman](https://www.postman.com/) - Ferramenta para testes de API.
+- [npm](https://www.npmjs.com/) - Gerenciador de pacotes JavaScript.
+- [Visual Studio Code](https://code.visualstudio.com/) - Editor de código.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Funcionalidades
 
-## Installation
+- **Cadastro de Usuário**: Rota `POST /sign-up` para cadastrar um usuário com nome de usuário e avatar.
 
-```bash
-$ npm install
-```
+- **Criação de Tweets**: Rota `POST /tweets` para criar tweets associados a um usuário.
 
-## Running the app
+- **Listagem de Tweets**: Rota `GET /tweets` para listar os 15 últimos tweets publicados. Suporta paginação via query string `?page=1`.
 
-```bash
-# development
-$ npm run start
+- **Listagem de Tweets por Usuário**: Rota `GET /tweets/:username` para listar todos os tweets de um usuário específico.
 
-# watch mode
-$ npm run start:dev
+## Pré-requisitos
 
-# production mode
-$ npm run start:prod
-```
+Certifique-se de ter instalado o Node.js e o NestJS em sua máquina. Além disso, você precisa configurar um banco de dados (variáveis globais em memória) para armazenar os usuários e tweets.
 
-## Test
+## Instalação
+
+1. Clone este repositório: `git clone https://github.com/seu-usuario/tweteroo-backend.git`
+2. Acesse a pasta do projeto: `cd tweteroo-backend`
+3. Instale as dependências: `npm install`
+
+## Configuração do Banco de Dados
+
+Para armazenar os dados dos usuários e tweets, configure variáveis globais em memória na camada de serviço. Certifique-se de seguir as especificações do projeto.
+
+## Uso
+
+Execute o servidor NestJS com o seguinte comando:
 
 ```bash
-# unit tests
-$ npm run test
+npm run start
 
-# e2e tests
-$ npm run test:e2e
+O servidor estará disponível em http://localhost:3000 (porta padrão do NestJS).
 
-# test coverage
-$ npm run test:cov
-```
+## Testes de Integração
+Certifique-se de que todos os testes de integração passam antes de implantar seu aplicativo. Substitua o conteúdo da pasta test/ pelo fornecido e execute os testes com o seguinte comando:
 
-## Support
+```bash
+npm run test:e2e
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Contribuição
+Sinta-se à vontade para contribuir com melhorias para este projeto. Crie um fork do repositório, faça suas alterações e envie uma solicitação de pull.
 
-## Stay in touch
+## Licença
+Este projeto está licenciado sob a Licença MIT - consulte o arquivo LICENSE para obter detalhes.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
