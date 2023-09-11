@@ -42,7 +42,7 @@ Execute o servidor NestJS com o seguinte comando:
 
 ```bash
 npm run start
-
+```
 O servidor estará disponível em http://localhost:3000 (porta padrão do NestJS).
 
 ## Testes de Integração
@@ -50,7 +50,7 @@ Certifique-se de que todos os testes de integração passam antes de implantar s
 
 ```bash
 npm run test:e2e
-
+```
 ## Contribuição
 Sinta-se à vontade para contribuir com melhorias para este projeto. Crie um fork do repositório, faça suas alterações e envie uma solicitação de pull.
 
